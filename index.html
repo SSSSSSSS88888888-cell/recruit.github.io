@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>関西電力 - 新卒採用2025</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        .hero-container {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+        
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .kepco-logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #fff, #87CEEB);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 107, 53, 0.4);
+        }
+        
+        .content-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #1e3c72;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .stats-container {
+            background: #f8f9fa;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .stat-item {
+            padding: 1.5rem;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        .recruitment-info {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 3rem auto 0;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .content-section {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-container">
+        <div id="hero-canvas"></div>
+        <div class="hero-overlay">
+            <div class="kepco-logo">関西電力</div>
+            <h1 class="hero-title">未来を照らす仲間を募集</h1>
+            <p class="hero-subtitle">革新的なエネルギーソリューションで関西の明日をつくろう</p>
+            <button class="cta-button" onclick="scrollToSection('recruitment')">採用情報を見る</button>
+        </div>
+    </div>
+
+    <section class="content-section">
+        <h2 class="section-title">関西電力で働く魅力</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-title">最先端技術への挑戦</div>
+                <p>再生可能エネルギーやスマートグリッドなど、次世代電力システムの開発に携われます。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌱</div>
+                <div class="feature-title">持続可能な社会づくり</div>
+                <p>脱炭素社会の実現に向けて、環境に配慮したエネルギー供給を推進しています。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤝</div>
+                <div class="feature-title">地域社会への貢献</div>
+                <p>関西地域の発展を支える重要なインフラ企業として、社会に貢献する仕事です。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-container">
+        <h2 class="section-title">関西電力の実績</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">2,900</div>
+                <div class="stat-label">万世帯への供給</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">70</div>
+                <div class="stat-label">年以上の歴史</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">32,000</div>
+                <div class="stat-label">人の従業員</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100</div>
+                <div class="stat-label">%安定供給</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="recruitment-info" id="recruitment">
+        <h2 class="section-title" style="color: white;">2025年度 新卒採用情報</h2>
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>募集職種</h3>
+                <p>技術系総合職<br>事務系総合職<br>専門職</p>
+            </div>
+            <div class="info-card">
+                <h3>エントリー期間</h3>
+                <p>2024年3月1日〜<br>2024年6月30日</p>
+            </div>
+            <div class="info-card">
+                <h3>選考プロセス</h3>
+                <p>書類選考<br>適性検査<br>面接（複数回）</p>
+            </div>
+            <div class="info-card">
+                <h3>勤務地</h3>
+                <p>大阪本店<br>各支社・営業所<br>発電所等</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 関西電力株式会社 All rights reserved.</p>
+        <p>この採用プロモーションページはデモ用に作成されたものです。</p>
+    </footer>
+
+    <script>
+        let particles = [];
+        let electricField = [];
+        let time = 0;
+
+        function setup() {
+            let canvas = createCanvas(windowWidth, windowHeight);
+            canvas.parent('hero-canvas');
+            
+            // 電力網のようなパーティクルシステムを初期化
+            for (let i = 0; i < 150; i++) {
+                particles.push({
+                    x: random(width),
+                    y: random(height),
+                    vx: random(-0.5, 0.5),
+                    vy: random(-0.5, 0.5),
+                    size: random(2, 8),
+                    brightness: random(50, 255),
+                    energy: random(0.5, 2)
+                });
+            }
+            
+            // 電力グリッドのノード
+            for (let i = 0; i < 20; i++) {
+                electricField.push({
+                    x: random(width),
+                    y: random(height),
+                    power: random(50, 150),
+                    pulsePhase: random(TWO_PI)
+                });
+            }
+        }
+
+        function draw() {
+            background(30, 60, 114, 20); // 半透明の青でトレイル効果
+            time += 0.02;
+            
+            // 電力網の描画
+            drawPowerGrid();
+            
+            // パーティクルの更新と描画
+            updateParticles();
+            drawParticles();
+            
+            // 電力ノードの描画
+            drawElectricNodes();
+            
+            // 電力線の描画
+            drawPowerLines();
+        }
+
+        function drawPowerGrid() {
+            stroke(100, 150, 255, 30);
+            strokeWeight(1);
+            
+            // 動的なグリッド線
+            for (let x = 0; x < width; x += 100) {
+                let wave = sin(time + x * 0.01) * 10;
+                line(x, 0, x + wave, height);
+            }
+            
+            for (let y = 0; y < height; y += 100) {
+                let wave = cos(time + y * 0.01) * 10;
+                line(0, y, width, y + wave);
+            }
+        }
+
+        function updateParticles() {
+            for (let p of particles) {
+                // 電場による影響
+                for (let field of electricField) {
+                    let distance = dist(p.x, p.y, field.x, field.y);
+                    if (distance < 200) {
+                        let force = field.power / (distance + 1);
+                        let angle = atan2(p.y - field.y, p.x - field.x);
+                        p.vx += cos(angle) * force * 0.0001;
+                        p.vy += sin(angle) * force * 0.0001;
+                    }
+                }
+                
+                // 位置更新
+                p.x += p.vx * p.energy;
+                p.y += p.vy * p.energy;
+                
+                // 画面端での反射
+                if (p.x < 0 || p.x > width) p.vx *= -0.8;
+                if (p.y < 0 || p.y > height) p.vy *= -0.8;
+                
+                // 画面内に保持
+                p.x = constrain(p.x, 0, width);
+                p.y = constrain(p.y, 0, height);
+                
+                // 明度の変化
+                p.brightness = 100 + sin(time * p.energy + p.x * 0.01) * 155;
+            }
+        }
+
+        function drawParticles() {
+            for (let p of particles) {
+                push();
+                translate(p.x, p.y);
+                
+                // グロー効果
+                for (let i = 3; i > 0; i--) {
+                    fill(100, 200, 255, p.brightness / (i * 2));
+                    noStroke();
+                    ellipse(0, 0, p.size * i, p.size * i);
+                }
+                
+                // コア
+                fill(255, 255, 255, p.brightness);
+                ellipse(0, 0, p.size * 0.3, p.size * 0.3);
+                pop();
+            }
+        }
+
+        function drawElectricNodes() {
+            for (let node of electricField) {
+                let pulse = sin(time * 3 + node.pulsePhase) * 0.5 + 0.5;
+                let nodeSize = node.power * 0.3 * (1 + pulse * 0.5);
+                
+                push();
+                translate(node.x, node.y);
+                
+                // 電力ノードのグロー
+                for (let i = 4; i > 0; i--) {
+                    fill(255, 150 + pulse * 105, 50, 80 / i);
+                    noStroke();
+                    ellipse(0, 0, nodeSize * i * 0.4, nodeSize * i * 0.4);
+                }
+                
+                // ノードのコア
+                fill(255, 200 + pulse * 55, 100);
+                ellipse(0, 0, nodeSize * 0.1, nodeSize * 0.1);
+                
+                // 電力放射線
+                stroke(255, 180 + pulse * 75, 80, 150);
+                strokeWeight(2);
+                for (let angle = 0; angle < TWO_PI; angle += PI / 4) {
+                    let length = nodeSize * 0.3 * pulse;
+                    let x1 = cos(angle + time) * length * 0.5;
+                    let y1 = sin(angle + time) * length * 0.5;
+                    let x2 = cos(angle + time) * length;
+                    let y2 = sin(angle + time) * length;
+                    line(x1, y1, x2, y2);
+                }
+                pop();
+            }
+        }
+
+        function drawPowerLines() {
+            stroke(100, 200, 255, 100);
+            strokeWeight(1);
+            
+            // 近くのパーティクル同士を線で結ぶ
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    let distance = dist(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
+                    if (distance < 80) {
+                        let alpha = map(distance, 0, 80, 150, 0);
+                        stroke(150, 220, 255, alpha);
+                        line(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
+                    }
+                }
+            }
+        }
+
+        function windowResized() {
+            resizeCanvas(windowWidth, windowHeight);
+            
+            // 電力ノードの位置を再調整
+            for (let node of electricField) {
+                if (node.x > width) node.x = width - 50;
+                if (node.y > height) node.y = height - 50;
+            }
+        }
+
+        function mouseMoved() {
+            // マウス位置に新しい電力ノードを追加（一時的）
+            if (electricField.length < 25) {
+                electricField.push({
+                    x: mouseX,
+                    y: mouseY,
+                    power: 80,
+                    pulsePhase: random(TWO_PI)
+                });
+                
+                // 古いノードを削除
+                if (electricField.length > 20) {
+                    electricField.shift();
+                }
+            }
+        }
+
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
